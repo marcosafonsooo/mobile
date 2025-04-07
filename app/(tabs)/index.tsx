@@ -1,17 +1,35 @@
 import { Text, View, StyleSheet } from "react-native";
 import {Link} from 'expo-router';
-import ImageViewer from "@/components/ImageViewer";
-import Button from "@/components/Button";
+import ImageViewer from "@/app/components/ImageViewer";
+import Button from "@/app/components/Button";
+import * as ImagePicker from 'expo-image-picker';
+import { useState } from "react";
+
+const PlaceholderImage = require('@/assets/images/afns.png');
 
 export default function Index() {
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    } else {
+      alert("Você não escolheu nenhuma imagem!");
+  }
+}
   return (
     <View style={afns.container}>
       <View style={afns.imageContainer}>
-        <ImageViewer imgSource={require("../../assets/images/afns.png")} />
+        <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage}/>
       </View>
-      <Text style = {afns.text}>O AFNS Art Gallery é o aplicativo perfeito para os amantes da arte urbana! Com ele, você pode explorar murais e grafites incríveis ao redor do mundo, descobrir a história por trás de cada obra e até aprender a criar suas próprias artes. Além de um mapa interativo que mostra as melhores pinturas de rua da sua cidade, o app oferece aulas exclusivas sobre técnicas de graffiti, stencil e outros estilos. Seja você um artista iniciante ou apenas um admirador, o AFNS Art Gallery conecta você ao vibrante universo da arte de rua! 🎨✨ </Text>
       <View style={afns.footerContainer}>
-        <Button label="Clique aqui!"></Button>
+        <Button label="Escolha uma foto!" onPress={pickImage}></Button>
+        <Button label="Usar essa foto"></Button>
       </View>
     </View>
   );
@@ -45,10 +63,7 @@ const afns = StyleSheet.create({
   },
 
   footerContainer: {
-    width: "100%",
-    height: 70,
-    justifyContent: "center",
+    flex: 1 / 3,
     alignItems: "center",
-    padding: 3,
   },
 });
