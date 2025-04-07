@@ -3,13 +3,14 @@ import {
     View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet 
 } from 'react-native';
 import { useTarefas } from '../../hooks/useTarefas';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 export default function App() {
     const { tarefas, novaTarefa, setNovaTarefa, adicionarTarefa, removerTarefa } = useTarefas();
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titulo}>Lista de Artes / Aulas a consultar</Text>
+            <Text style={styles.titulo}>Controle de artes / aulas</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput
@@ -18,7 +19,9 @@ export default function App() {
                     value={novaTarefa}
                     onChangeText={setNovaTarefa}
                 />
-                <Button title="Adicionar" onPress={adicionarTarefa} />
+                <TouchableOpacity onPress={adicionarTarefa}>
+                    <FontAwesome6 name="add" size={24} color="#49093e"/>
+                </TouchableOpacity>
             </View>
 
             <FlatList
@@ -28,7 +31,7 @@ export default function App() {
                     <View style={styles.tarefaContainer}>
                         <Text style={styles.tarefaTexto}>{item.texto}</Text>
                         <TouchableOpacity onPress={() => removerTarefa(item.id)}>
-                            <Text style={styles.remover}>❌</Text>
+                            <FontAwesome6 name="trash-alt" size={24} color="#49093e" />
                         </TouchableOpacity>
                     </View>
                 )}
@@ -38,9 +41,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, backgroundColor: '#A9A9A9' },
-    titulo: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20, color: '#FFD700'},
-    inputContainer: { flexDirection: 'row', marginBottom: 10,},
+    container: { flex: 1, padding: 20, backgroundColor: '#ffe7fa' },
+    titulo: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20, color: '#49093e'},
+    inputContainer: { flexDirection: 'row', marginBottom: 10, alignItems: 'center'},
     input: { flex: 1, borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 5, marginRight: 10, color: ''},
     tarefaContainer: { 
         flexDirection: 'row', 

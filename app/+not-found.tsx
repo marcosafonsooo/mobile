@@ -14,14 +14,18 @@ export default function NotFoundscreen(){
 const afns = StyleSheet.create({
     container: {
       flex: 1,
-            backgroundColor: '#A9A9A9',
+            backgroundColor: '#ffe7fa',
             justifyContent: "center",
             alignItems: "center",
+            
     },
     button:{
-      fontSize: 10,
+      fontSize: 24,
       textDecorationLine: 'underline',
-      color: '#FFD700',
+      color: '#49093e',
+      paddingInlineStart: 150,
+      paddingInlineEnd: 150,
+      textAlign: 'center'
     
     },
 

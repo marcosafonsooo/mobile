@@ -9,15 +9,15 @@ export default function RootLayout() {
     <StatusBar style="light"/>
   <Stack
       screenOptions={{
-      headerStyle:{backgroundColor: '#A9A9A9',},
+      headerStyle:{backgroundColor: '#ffe7fa',},
       headerShadowVisible: false,
-      headerTintColor:'#FFD700',
+      headerTintColor:'#49093e',
     }}
   
   >
 
     <Stack.Screen name = "(tabs)" options={{ headerShown: false}}/>
-    <Stack.Screen name = "+not-founf" options={{}}/>
+    <Stack.Screen name = "+not-found" options={{}}/>
     </Stack>
     </>
     );
