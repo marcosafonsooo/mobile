@@ -15,8 +15,8 @@ export default function ImageViewer({ imgSource, selectedImage}: Props) {
 
 const styles = StyleSheet.create({
     image: {
-        width: '100%',
-        height: '30%',
+        width: '350%',
+        height: '100%',
         justifyContent: "center",
     }
 });

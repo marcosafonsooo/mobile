@@ -28,7 +28,7 @@ export default function Index() {
         <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage}/>
       </View>
       <View style={afns.footerContainer}>
-        <Button label="Escolha uma foto!" onPress={pickImage}></Button>
+        <Button theme="primary" label="Escolha uma foto!" onPress={pickImage}></Button>
         <Button label="Usar essa foto"></Button>
       </View>
     </View>

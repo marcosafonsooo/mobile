@@ -28,8 +28,7 @@ export default function Button({ label, theme, onPress }: Props) {
     }
     return(
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={onPress}>
-          <FontAwesome name="picture-o" size={18} color="#49093e" style={styles.buttonIcon} />
+        <Pressable style={styles.button} onPress={() => alert('Você apertou!!')}>
           <Text style={styles.buttonLabel}>{label}</Text>
         </Pressable>
       </View>
