@@ -4,11 +4,15 @@ import ImageViewer from "@/app/components/ImageViewer";
 import Button from "@/app/components/Button";
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from "react";
+import IconButton from "../components/IconButton";
+import CircleButton from "../components/CircleButton";
 
 const PlaceholderImage = require('@/assets/images/afns.png');
 
 export default function Index() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+  const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
@@ -18,6 +22,7 @@ export default function Index() {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
     } else {
       alert("Você não escolheu nenhuma imagem!");
   }
@@ -27,10 +32,14 @@ export default function Index() {
       <View style={afns.imageContainer}>
         <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage}/>
       </View>
+      {showAppOptions ? (
+        <View />
+      ) : (
       <View style={afns.footerContainer}>
         <Button theme="primary" label="Escolha uma foto!" onPress={pickImage}></Button>
-        <Button label="Usar essa foto"></Button>
+        <Button label="Usar essa foto" onPress={() => setShowAppOptions(true)}></Button>
       </View>
+      )}
     </View>
   );
 }

@@ -3,6 +3,7 @@ import Ionicons  from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View, Text } from 'react-native';
+import { EvilIcons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   return( 
@@ -60,6 +61,19 @@ export default function TabLayout() {
       <Ionicons name={focused ? 'brush' : 'brush-outline'} color={color} size ={24}/>) //icone
     }}/>
 
+<Tabs.Screen name = "buscaCEP" options={{ 
+      title: 'Qual a minha localização?',
+      headerTitle: () => (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <FontAwesome6 name="phoenix-framework" size={24} color="#49093e" />
+          <Text style={{ color: '#49093e', fontSize: 18 }}>AFNS art gallery.</Text>
+        </View>
+      ),
+      tabBarIcon:({color, focused})=> (
+      <Ionicons name={focused ? 'location' : 'location-outline'} color={color} size ={24}/>) //icone
+    }}/>
+
   </Tabs>
+  
     );
 }

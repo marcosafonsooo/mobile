@@ -10,7 +10,7 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titulo}>Controle de artes / aulas</Text>
+            <Text style={styles.titulo}>Adicione e controle suas artes / aulas pendentes!!</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput
