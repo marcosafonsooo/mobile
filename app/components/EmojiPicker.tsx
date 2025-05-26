@@ -15,7 +15,7 @@ export default function EmojiPicker({ isVisible, children, onClose }: Props) {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Choose a sticker</Text>
             <Pressable onPress={onClose}>
-              <MaterialIcons name="close" color="#fff" size={22} />
+              <MaterialIcons name="close" color="#7a1f4c" size={22} />
             </Pressable>
           </View>
           {children}
@@ -27,26 +27,32 @@ export default function EmojiPicker({ isVisible, children, onClose }: Props) {
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '25%',
+    height: '30%',
     width: '100%',
-    backgroundColor: '#25292e',
-    borderTopRightRadius: 18,
-    borderTopLeftRadius: 18,
+    backgroundColor: '#ffe6f4', // rosa claro
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24,
     position: 'absolute',
     bottom: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 6,
   },
   titleContainer: {
-    height: '16%',
-    backgroundColor: '#464C55',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+    height: 50,
+    backgroundColor: '#ffd6ec', // tom mais escuro pra destacar
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   title: {
-    color: '#fff',
+    color: '#7a1f4c',
     fontSize: 16,
+    fontWeight: '600',
   },
 });
