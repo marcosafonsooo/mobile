@@ -1,17 +1,22 @@
-import { Text, View, StyleSheet } from "react-native";
-import {Link} from 'expo-router';
+import { View, StyleSheet, Dimensions, ImageSourcePropType } from "react-native";
+import { useState } from "react";
+import * as ImagePicker from 'expo-image-picker';
+import { Image } from 'expo-image';
+
 import ImageViewer from "@/app/components/ImageViewer";
 import Button from "@/app/components/Button";
-import * as ImagePicker from 'expo-image-picker';
-import { useState } from "react";
 import IconButton from "../components/IconButton";
 import CircleButton from "../components/CircleButton";
+import EmojiPicker from "../components/EmojiPicker";
+import EmojiList from "../components/EmojiList";
 
 const PlaceholderImage = require('@/assets/images/afns.png');
 
 export default function Index() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [pickedSticker, setPickedSticker] = useState<ImageSourcePropType | null>(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,54 +30,75 @@ export default function Index() {
       setShowAppOptions(true);
     } else {
       alert("Você não escolheu nenhuma imagem!");
-  }
-}
+    }
+  };
+
+  const onAddSticker = () => setIsModalVisible(true);
+  const onModalClose = () => setIsModalVisible(false);
+  const handleStickerSelect = (sticker: ImageSourcePropType) => {
+    setPickedSticker(sticker);
+  };
+
   return (
-    <View style={afns.container}>
-      <View style={afns.imageContainer}>
-        <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage}/>
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
+        {pickedSticker && (
+          <Image source={pickedSticker} style={styles.sticker} />
+        )}
       </View>
+
       {showAppOptions ? (
-        <View />
+        <View style={styles.footerContainer}>
+          <CircleButton onPress={onAddSticker} />
+          <IconButton icon="save-alt" label="Salvar" onPress={() => alert("Salvar ainda não implementado")} />
+        </View>
       ) : (
-      <View style={afns.footerContainer}>
-        <Button theme="primary" label="Escolha uma foto!" onPress={pickImage}></Button>
-        <Button label="Usar essa foto" onPress={() => setShowAppOptions(true)}></Button>
-      </View>
+        <View style={styles.footerContainer}>
+          <Button theme="primary" label="Escolha uma foto!" onPress={pickImage} />
+          <Button label="Usar essa foto" onPress={() => setShowAppOptions(true)} />
+        </View>
       )}
+
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={handleStickerSelect} onCloseModal={onModalClose} />
+      </EmojiPicker>
     </View>
   );
 }
-const afns = StyleSheet.create({
+
+const { width } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-          backgroundColor: '#ffe7fa',
-          justifyContent: "center",
-          alignItems: "center",
-  },
-  text: {
-          color: '#49093e',
-          paddingInlineStart: 150,
-          paddingInlineEnd: 150,
-          textAlign: 'center'
-  },
-  button:{
-    fontSize:20,
-    textDecorationLine: 'underline',
-    color: '#49093e',
-
+    backgroundColor: '#ffe7fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   imageContainer: {
-    width: 200,
-    height: 440,
+    width: '100%',
+    maxWidth: 300,
+    aspectRatio: 3 / 4,
     borderRadius: 10,
+    overflow: 'hidden',
     marginBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
   },
-
+  sticker: {
+    width: 100,
+    height: 100,
+    position: 'absolute',
+    top: '40%',
+    left: '40%',
+  },
   footerContainer: {
-    flex: 1 / 3,
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
   },
 });
