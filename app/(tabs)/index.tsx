@@ -1,6 +1,7 @@
-import { View, StyleSheet, Dimensions, ImageSourcePropType } from "react-native";
+import { View, StyleSheet, ImageSourcePropType } from "react-native";
 import { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Image } from 'expo-image';
 
 import ImageViewer from "@/app/components/ImageViewer";
@@ -9,17 +10,18 @@ import IconButton from "../components/IconButton";
 import CircleButton from "../components/CircleButton";
 import EmojiPicker from "../components/EmojiPicker";
 import EmojiList from "../components/EmojiList";
+import EmojiSticker from "../components/EmojiSticker";
 
 const PlaceholderImage = require('@/assets/images/afns.png');
 
 export default function Index() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [pickedSticker, setPickedSticker] = useState<ImageSourcePropType | null>(null);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
       quality: 1,
@@ -35,70 +37,67 @@ export default function Index() {
 
   const onAddSticker = () => setIsModalVisible(true);
   const onModalClose = () => setIsModalVisible(false);
-  const handleStickerSelect = (sticker: ImageSourcePropType) => {
-    setPickedSticker(sticker);
+  const handleStickerSelect = (sticker: ImageSourcePropType) => setPickedSticker(sticker);
+  const onReset = () => {
+    setPickedSticker(null);
+    setSelectedImage(undefined);
+    setShowAppOptions(false);
   };
+  const onSaveImageAsync = () => alert("Salvar ainda não implementado");
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <View style={styles.imageContainer}>
         <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
-        {pickedSticker && (
-          <Image source={pickedSticker} style={styles.sticker} />
-        )}
+        {pickedSticker && <EmojiSticker imageSize={100} stickerSource={pickedSticker} />}
       </View>
 
       {showAppOptions ? (
-        <View style={styles.footerContainer}>
-          <CircleButton onPress={onAddSticker} />
-          <IconButton icon="save-alt" label="Salvar" onPress={() => alert("Salvar ainda não implementado")} />
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionsRow}>
+            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <CircleButton onPress={onAddSticker} />
+            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+          </View>
         </View>
       ) : (
         <View style={styles.footerContainer}>
           <Button theme="primary" label="Escolha uma foto!" onPress={pickImage} />
-          <Button label="Usar essa foto" onPress={() => setShowAppOptions(true)} />
+          <Button label="Clique" onPress={() => setShowAppOptions(true)} />
         </View>
       )}
 
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
         <EmojiList onSelect={handleStickerSelect} onCloseModal={onModalClose} />
       </EmojiPicker>
-    </View>
+    </GestureHandlerRootView>
   );
 }
-
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffe7fa',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    alignItems: "center",
   },
   imageContainer: {
-    width: '100%',
-    maxWidth: 300,
-    aspectRatio: 3 / 4,
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 20,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
-  },
-  sticker: {
-    width: 100,
-    height: 100,
-    position: 'absolute',
-    top: '40%',
-    left: '40%',
+    alignSelf: 'stretch',
   },
   footerContainer: {
-    width: '100%',
+    flex: 1 / 3,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+  },
+  optionsContainer: {
+    position: 'absolute',
+    bottom: 80,
+  },
+  optionsRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 20,
   },
 });

@@ -1,22 +1,31 @@
-import { StyleSheet } from "react-native";
-import { Image, type ImageSource } from "expo-image";
+import { View, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
 
 type Props = {
-    imgSource: ImageSource;
-    selectedImage?: string;
+  selectedImage?: string;
+  imgSource: any;
 };
 
-export default function ImageViewer({ imgSource, selectedImage}: Props) {
-    const ImageSource= selectedImage ? { uri: selectedImage } : imgSource;
+export default function ImageViewer({ selectedImage, imgSource }: Props) {
+  const source = selectedImage ? { uri: selectedImage } : imgSource;
 
-    return <Image source={ImageSource} style={styles.image}/>;
-};
-
+  return (
+    <View style={styles.imageContainer}>
+      <Image source={source} style={styles.image} contentFit="cover" />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-    image: {
-        width: '350%',
-        height: '100%',
-        justifyContent: "center",
-    }
+  imageContainer: {
+    width: 300,
+    height: 400,
+    borderRadius: 16,
+    overflow: 'hidden',
+    backgroundColor: '#ccc', // só pra caso não carregue a imagem
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
 });
