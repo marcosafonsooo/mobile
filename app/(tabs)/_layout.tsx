@@ -3,6 +3,7 @@ import Ionicons  from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View, Text } from 'react-native';
+import { StatusBar } from "expo-status-bar";
 import { EvilIcons } from "@expo/vector-icons";
 
 export default function TabLayout() {
