@@ -1,11 +1,10 @@
-import { FontAwesome6 } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Button, Keyboard, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-export default function buscaCep() {
+export default function BuscaCep() {
   const [cep, setCep] = useState('');
+
   interface Endereco {
     logradouro: string;
     bairro: string;
@@ -29,15 +28,11 @@ export default function buscaCep() {
         Alert.alert('Erro', 'CEP não encontrado.');
       } else {
         setEnderecos((prev) => [...prev, dados]);
-
-        Keyboard.dismiss(); // Fecha o teclado após a busca
+        Keyboard.dismiss();
       }
     } catch (error) {
       Alert.alert('Erro de conexão', 'Não foi possível buscar o CEP. Tente novamente.');
     }
-
-
-    
   }
 
   function removerEndereco(index: number) {
@@ -46,41 +41,39 @@ export default function buscaCep() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}><strong>Ache o endereço de alguma arte!</strong></Text>
+      <Text style={[styles.title, { fontWeight: 'bold' }]}>
+        Ache o endereço de alguma arte!
+      </Text>
 
-    <View style={styles.infoContainer}>
+      <View style={styles.infoContainer}>
         <TextInput
-            style={styles.textinput}
-            placeholder="Digite o CEP (somente números)"
-            value={cep}
-            onChangeText={setCep}
-            keyboardType="numeric"
-            maxLength={8}
+          style={styles.textinput}
+          placeholder="Digite o CEP (somente números)"
+          value={cep}
+          onChangeText={setCep}
+          keyboardType="numeric"
+          maxLength={8}
         />
         <TouchableOpacity onPress={buscarCEP} style={styles.lupa}>
-            <AntDesign name="search1" size={24} color="#49093e" />
+          <AntDesign name="search1" size={24} color="#49093e" />
         </TouchableOpacity>
-    </View>
-
-
-    {enderecos.map((endereco, index) => (
-  <View key={index} style={styles.card}>
-    <View style={styles.cardContent}>
-      <View>
-        <Text style={styles.label}>📍 Logradouro: <Text style={styles.value}>{endereco.logradouro}</Text></Text>
-        <Text style={styles.label}>🏘️ Bairro: <Text style={styles.value}>{endereco.bairro}</Text></Text>
-        <Text style={styles.label}>🌆 Cidade: <Text style={styles.value}>{endereco.localidade}</Text></Text>
-        <Text style={styles.label}>🗺️ Estado: <Text style={styles.value}>{endereco.uf}</Text></Text>
       </View>
-      <TouchableOpacity onPress={() => removerEndereco(index)}>
-        <AntDesign name="delete" size={24} color="#a00" />
-      </TouchableOpacity>
-    </View>
-  </View>
-))}
 
-
-      <StatusBar style="auto" />
+      {enderecos.map((endereco, index) => (
+        <View key={index} style={styles.card}>
+          <View style={styles.cardContent}>
+            <View>
+              <Text style={styles.label}>📍 Logradouro: <Text style={styles.value}>{endereco.logradouro}</Text></Text>
+              <Text style={styles.label}>🏘️ Bairro: <Text style={styles.value}>{endereco.bairro}</Text></Text>
+              <Text style={styles.label}>🌆 Cidade: <Text style={styles.value}>{endereco.localidade}</Text></Text>
+              <Text style={styles.label}>🗺️ Estado: <Text style={styles.value}>{endereco.uf}</Text></Text>
+            </View>
+            <TouchableOpacity onPress={() => removerEndereco(index)}>
+              <AntDesign name="delete" size={24} color="#a00" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      ))}
     </View>
   );
 }
@@ -89,8 +82,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffe7fa',
-    // alignItems: 'center',
-    // justifyContent: 'center',
     padding: 20,
   },
   infoContainer: {
@@ -98,10 +89,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-    lupa: {
-        verticalAlign: 'middle',
-        alignSelf: 'center',
-    },
+  lupa: {
+    alignSelf: 'center',
+  },
   title: {
     fontSize: 24,
     marginBottom: 20,
@@ -109,20 +99,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   textinput: {
-    flex: 1, 
+    flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc', 
-    padding: 10, 
-    borderRadius: 5, 
-    marginRight: 10, 
-    color: ''
-  },
-  result: {
-    marginTop: 20,
-    color: '#49093e',
-    alignItems: 'flex-start',
-    // fontSize: 50,
-    width: '100%',
+    borderColor: '#ccc',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+    color: '#000',
   },
   card: {
     backgroundColor: '#fff',
@@ -135,23 +118,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  
   cardContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
-  
   label: {
     fontSize: 16,
     color: '#49093e',
     marginBottom: 6,
     fontWeight: 'bold',
   },
-  
   value: {
     fontWeight: 'normal',
     color: '#333',
   },
-  
 });
