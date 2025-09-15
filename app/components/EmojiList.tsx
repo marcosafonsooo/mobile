@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from 'react';
 import { ImageSourcePropType, StyleSheet, FlatList, Pressable, View } from 'react-native';
 import { Image } from 'expo-image';

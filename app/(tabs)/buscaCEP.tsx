@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Keyboard, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import React from "react";
 
 export default function BuscaCep() {
   const [cep, setCep] = useState('');

@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
+import React from "react";
 
 export default function About() {
   const { width } = useWindowDimensions();

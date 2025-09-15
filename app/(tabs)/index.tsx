@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as MediaLibrary from 'expo-media-library';
 import { captureRef } from "react-native-view-shot";
 import { toJpeg } from 'html-to-image';
-
+import React from "react";
 import ImageViewer from "@/app/components/ImageViewer";
 import Button from "@/app/components/Button";
 import IconButton from "../components/IconButton";
